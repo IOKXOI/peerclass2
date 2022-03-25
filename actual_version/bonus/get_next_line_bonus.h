@@ -12,7 +12,7 @@
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
-# define LIMIT_FD 1023 // index maximal de FD 
+# define LIMIT_FD 1023 // maximum de FD 
 # define FD_LIMIT 1025 // nombre d'index a creer dans le tableau
 # define STR_TO_RETURN 1024 //index de l4emplacement de ma str a return dans le tableau
 
