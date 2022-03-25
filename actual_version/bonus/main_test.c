@@ -4,24 +4,13 @@
 #include <string.h>
 #include <fcntl.h>
 
-
-
-
-#ifndef FILE_1 
-#define FILE_1 "./files/41_with_nl"
-#endif
-
-#ifndef FILE_2
-#define FILE_2 "./files/alternate_line_nl_no_nl"
-#endif
-
 int main()
 {
 	int fd1;
 	int fd2;
 	char *str;
-	fd1 = open(FILE_1, O_RDONLY);
-	fd2 = open(FILE_2, O_RDONLY);
+	fd1 = open("./files/41_with_nl", O_RDONLY);
+	fd2 = open("./files/alternate_line_nl_no_nl", O_RDONLY);
 
 	str = get_next_line(fd1);
 	printf("FD1 = %s", str);
