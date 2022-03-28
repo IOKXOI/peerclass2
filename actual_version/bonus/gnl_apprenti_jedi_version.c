@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_padawan_version.c                              :+:      :+:    :+:   */
+/*   gnl_apprenti_jedi_version.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/03/28 09:39:42 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/03/28 10:09:58 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "gnl_apprenti_jedi_version.h"
 /*
 Fonction permettant d'allouer dynamiquement de l'espace pour le buffer. J'ai choisis de ne pas creer un char *buffer, mais de me servir de mon char **
 	pour stocker mon buffer. J'avais un choix a faire parmit mes 6 variables, et c'est elle que j'ai choisis de car les autres me semble essentielles,
@@ -45,7 +46,7 @@ char	*stop_condition(int nb, int fd, char *valid_line, char **buffer)
 			free(valid_line);
 		return (NULL);
 	}
-	if (nb == 0) est-ce que je dois preciser cette condition pour la lisibilite du code?
+	if (nb == 0) // est-ce que je dois preciser cette condition pour la lisibilite du code? oui 
 	{
 		free(buffer[fd]);
 		buffer[fd] = NULL;
@@ -84,7 +85,7 @@ J'utilise cette fonction pour mettre a null mon buffer si j'ai extrait l'integra
 	Ca me permet de remplir la condition pour creer un nouveau buffer lors du prochain read.
 	Je ne sais pas si le strndup est pertinent. C'est pour ne pas garder de la memoire alloue non utile, mais ca demande une nouvelle allocation.
 */
-char	*get_remainder(int *problem, int *exit_loop; char *buffer)
+char	*get_remainder(int *problem, int *exit_loop, char *buffer)
 {
 	char	*new_remainder;
 
@@ -123,7 +124,7 @@ char	*get_next_line(int fd)
 			//dans le cas ou je ne re-read pas, car j'ai deja un buffer avec du contenu a exploiter. ( je vois pas comment faire ca propre).
 		
 	new_line = FALSE;
-	if (fd < 0 || fd > FD_LIMIT || BUFFER_SIZE < 1)
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (free_all(buffer));
 	while (!new_line)
 	{
