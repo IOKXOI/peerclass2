@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/03/31 07:49:31 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/03/31 09:27:44 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*extract_str(char *buffer, ssize_t *new_line)
 	while (*(buffer + (i + 1)) && *(buffer + i) != '\n')
 		i++;
 	if (*(buffer + i) == '\n')
-		*new_line = true;
+		*new_line = TRUE;
 	extracted = ft_strndup(buffer, i);
 	if (!extracted)
 	{
@@ -100,7 +100,7 @@ char	*get_remainder(ssize_t *problem, ssize_t *exit_loop, char *buffer)
 	if (!new_remainder)
 	{
 		*problem = -1;
-		*exit_loop = true;
+		*exit_loop = TRUE;
 		return (NULL);
 	}
 	free(buffer);
@@ -125,7 +125,7 @@ char	*get_next_line(int fd)
 	nb = 2; //nb initialise a 2 pour ne pas rentrer dans de mauvaises conditions dans stop_condition,
 			//dans le cas ou je ne re-read pas, car j'ai deja un buffer avec du contenu a exploiter. ( je vois pas comment faire ca propre).
 		
-	new_line = false;
+	new_line = FALSE;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE < 1)
 		return (free_all_fd(buffer));
 	while (!new_line)
