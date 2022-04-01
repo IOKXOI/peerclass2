@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/03/31 09:27:44 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/01 18:16:52 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ Cette fonction me sert a savoir si je m'arrete a cause d'une erreur, ou si c'est
 	Je me suis ensuite dit que c'etait mieux de separer la creation et le remplissage du buffer de la verification des conditions. Bon choix??
 	(ne pas avoir de int nb me permettrait d'avoir un buffer en dehors de mon tableau, mais me semble moins adapte).
 */
-char	*stop_condition(int nb, int fd, char *valid_line, char **buffer)
+char	*stop_condition(int fd, ssize_t nb, char *valid_line, char **buffer)
 {
 	if (nb < 0)
 	{
@@ -64,8 +64,8 @@ Cette fonction me sert a recuperer ce que j'ai stocker dans le buffer, jusqu'au 
 */
 char	*extract_str(char *buffer, ssize_t *new_line)
 {
-	size_t	i;
 	char	*extracted;
+	size_t	i;
 
 	i = 0;
 	while (*(buffer + (i + 1)) && *(buffer + i) != '\n')
@@ -74,10 +74,7 @@ char	*extract_str(char *buffer, ssize_t *new_line)
 		*new_line = TRUE;
 	extracted = ft_strndup(buffer, i);
 	if (!extracted)
-	{
-		//free(buffer); // il ne me semble pas necessaire de le free ici car je vais le free dans free_all
 		return (NULL);
-	}
 	ft_memmove(buffer, (buffer + (i + 1)), ft_strlen((buffer + i)));
 	return (extracted);
 }
@@ -124,7 +121,6 @@ char	*get_next_line(int fd)
 					   //valid_line dans tout les cas, si le NULL est cause par une erreur.
 	nb = 2; //nb initialise a 2 pour ne pas rentrer dans de mauvaises conditions dans stop_condition,
 			//dans le cas ou je ne re-read pas, car j'ai deja un buffer avec du contenu a exploiter. ( je vois pas comment faire ca propre).
-		
 	new_line = FALSE;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE < 1)
 		return (free_all_fd(buffer));
@@ -132,20 +128,15 @@ char	*get_next_line(int fd)
 	{
 		if (!buffer[fd])
 			nb = create_and_fill_buffer(fd, buffer);
-//		if (!buffer[fd])//Je peux retirer cette condition ici et la verifier dans stop_condition().
-//						//Si dans create_and_fill_buffer, je return -1 dans le cas ou mon allocation echoue.
-//						// Puisque je free deja tout dans stop_condition pour nb = -1, je n'aurais qu'a if(buffer) avant de free.
-//						// Est ce que c'est pertinent ou ca nuit a la lisibilite du code?
-//			return (NULL);// obliger de verifier dans stop_condition, j'ai trop de lignes...
 		if (nb < 1)
-			return (stop_condition(nb, fd, valid_line, buffer));
+			return (stop_condition(fd, nb, valid_line, buffer));
 		temp = extract_str(buffer[fd], &new_line); //j'extrait ma chaine jusqu'au \n s'il y a, sinon jusqu'a fin de buffer. Si allocation echoue, str_join va return NULL;
 		valid_line = ft_strjoin_and_free(valid_line, temp); //si j'ai une valid_line, je lui join la str temp fraichement extraite. Sinon, je recupere juste temp dans valid line.
 															//j'ai choisis de free temp dans le join pour eviter de refaire une allocation dynamique  inutile dans le cas ou je n'ai pas de valid_line.
 		if (!valid_line)
-			return (stop_condition(-1, fd, valid_line, buffer));
+			return (stop_condition(fd, -1, valid_line, buffer));
 		buffer[fd] = get_remainder(&nb, &new_line, buffer[fd]);
 	}
-	return (stop_condition(nb, fd, valid_line, buffer));
+	return (stop_condition(fd, nb, valid_line, buffer));
 }
 

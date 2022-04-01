@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 17:37:38 by sydauria          #+#    #+#             */
-/*   Updated: 2022/03/31 07:49:41 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:50:03 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	*free_all_fd(char **remainder)
 	return (NULL);
 }
 
-char	*ft_strndup(char *buffer, int n)
+char	*ft_strndup(char *buffer, size_t n)
 {
-	int		i;
+	size_t	i;
 	char	*str;
 
 	i = 0;
