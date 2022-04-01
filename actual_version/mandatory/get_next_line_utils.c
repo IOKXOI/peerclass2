@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 17:37:38 by sydauria          #+#    #+#             */
-/*   Updated: 2022/03/31 07:41:37 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:40:21 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,10 @@ void	*ft_memmove(void *dest, const void *src, size_t size)
 	return (dest);
 }
 
-char	*ft_strdup(char *buffer)
+char	*ft_strndup(char *buffer, size_t n)
 {
-	int		i;
 	char	*str;
-
-	i = 0;
-	if (buffer)
-	{
-		str = malloc(sizeof(char) * (ft_strlen(buffer) + 1));
-		if (str)
-		{
-			while (*(buffer + i))
-			{
-				*(str + i) = *(buffer + i);
-				i++;
-			}
-			*(str + i) = '\0';
-		}
-		return (str);
-	}
-	return (NULL);
-}
-
-char	*ft_strndup(char *buffer, int n)
-{
-	int		i;
-	char	*str;
+	size_t	i;
 
 	i = 0;
 	if (buffer)

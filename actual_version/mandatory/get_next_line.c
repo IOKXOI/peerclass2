@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/04/01 17:13:47 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:40:19 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ssize_t	fill_buffer(int fd, char *buffer)
 	return (nb);
 }
 
-char	*stop_condition(int nb, char *valid_line)
+char	*stop_condition(ssize_t nb, char *valid_line)
 {
 	if (nb < 0)
 	{
@@ -59,9 +59,9 @@ char	*extract_str(char *buffer, ssize_t *new_line)
 
 char	*get_next_line(int fd)
 {
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*valid_line;
 	char		*temp;
-	static char	buffer[BUFFER_SIZE + 1];
 	ssize_t		nb;
 	ssize_t		new_line;
 
