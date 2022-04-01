@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/04/01 18:16:52 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/01 18:26:08 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char	*get_next_line(int fd)
 	ssize_t		nb;
 	ssize_t		new_line;
 
+	new_line = FALSE;
 	valid_line = NULL; //Je dois initialiser valid_line a NULL, car si un probleme survient 
 					   //lors du read, je dois la free si elle est alloue, mais dans le cas ou
 					   //un probleme survient lors du premier appel de create_and_fill_buffer
@@ -121,7 +122,6 @@ char	*get_next_line(int fd)
 					   //valid_line dans tout les cas, si le NULL est cause par une erreur.
 	nb = 2; //nb initialise a 2 pour ne pas rentrer dans de mauvaises conditions dans stop_condition,
 			//dans le cas ou je ne re-read pas, car j'ai deja un buffer avec du contenu a exploiter. ( je vois pas comment faire ca propre).
-	new_line = FALSE;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE < 1)
 		return (free_all_fd(buffer));
 	while (!new_line)
