@@ -6,7 +6,7 @@
 /*   By: sydauria <sydauria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:04:39 by sydauria          #+#    #+#             */
-/*   Updated: 2022/04/01 18:26:08 by sydauria         ###   ########.fr       */
+/*   Updated: 2022/04/04 00:31:29 by sydauria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Fonction permettant d'allouer dynamiquement de l'espace pour le buffer. J'ai cho
 	et celle-ci reste un buffer que je stock dans un tableau qui stock des buffers.
 */
 
-ssize_t	create_and_fill_buffer(int fd, char **buffer)
+static ssize_t	create_and_fill_buffer(int fd, char **buffer)
 {
 	ssize_t	nb;
 
@@ -38,7 +38,7 @@ Cette fonction me sert a savoir si je m'arrete a cause d'une erreur, ou si c'est
 	Je me suis ensuite dit que c'etait mieux de separer la creation et le remplissage du buffer de la verification des conditions. Bon choix??
 	(ne pas avoir de int nb me permettrait d'avoir un buffer en dehors de mon tableau, mais me semble moins adapte).
 */
-char	*stop_condition(int fd, ssize_t nb, char *valid_line, char **buffer)
+static char	*stop_condition(int fd, ssize_t nb, char *valid_line, char **buffer)
 {
 	if (nb < 0)
 	{
@@ -62,7 +62,7 @@ Cette fonction me sert a recuperer ce que j'ai stocker dans le buffer, jusqu'au 
 	sur la meme string, a la recherche du meme caractere. Mais ca me coute une variable et une ligne de definition. UNe fois la string extraite du buffer,
 	je memoove, pour garder uniquement la partie non utilise de mon buffer.
 */
-char	*extract_str(char *buffer, ssize_t *new_line)
+static char	*extract_str(char *buffer, ssize_t *new_line)
 {
 	char	*extracted;
 	size_t	i;
@@ -84,7 +84,7 @@ J'utilise cette fonction pour mettre a null mon buffer si j'ai extrait l'integra
 	Ca me permet de remplir la condition pour creer un nouveau buffer lors du prochain read.
 	Je ne sais pas si le strndup est pertinent. C'est pour ne pas garder de la memoire alloue non utile, mais ca demande une nouvelle allocation.
 */
-char	*get_remainder(ssize_t *problem, ssize_t *exit_loop, char *buffer)
+static char	*get_remainder(ssize_t *problem, ssize_t *exit_loop, char *buffer)
 {
 	char	*new_remainder;
 
